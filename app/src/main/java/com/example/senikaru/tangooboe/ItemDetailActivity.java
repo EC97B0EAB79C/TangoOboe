@@ -4,12 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.widget.GridView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -40,6 +47,22 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        Intent intent=getIntent();
+        String chp_id=intent.getStringExtra("chp_id");
+
+        ArrayList<HashMap<String, String>> dataArr;
+        dataArr=new ArrayList<HashMap<String, String>>();
+        DBManager dbManager=new DBManager(this);
+        dataArr=dbManager.getChap(chp_id);
+
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.tango_list);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(new TangoRecyclerViewAdapter(dataArr, R.layout.tango_item));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
     }

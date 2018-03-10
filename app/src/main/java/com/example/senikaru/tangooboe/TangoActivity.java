@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class TangoActivity extends AppCompatActivity{
     String Value;
     Context context;
     Tango_Adapter adapter;
+    ImageView wowsuch;
     int orientation;
 
     @Override
@@ -59,6 +61,7 @@ public class TangoActivity extends AppCompatActivity{
 
         listview=(GridView) findViewById(R.id.tango_list);
         tange_search=(EditText)findViewById(R.id.tango_find);
+        wowsuch=(ImageView)findViewById(R.id.wow_such);
 
         //Database
         dataArr=new ArrayList<HashMap<String, String>>();
@@ -89,9 +92,11 @@ public class TangoActivity extends AppCompatActivity{
                         Tango_Adapter adapter=new Tango_Adapter(context, R.layout.tango_item, dataArr);
                         listview.setAdapter(adapter);
                         listview.setVisibility(View.VISIBLE);
+                        wowsuch.setVisibility(View.INVISIBLE);
                     }
                     else{
                         listview.setVisibility(View.INVISIBLE);
+                        wowsuch.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -103,6 +108,7 @@ public class TangoActivity extends AppCompatActivity{
                     Tango_Adapter adapter=new Tango_Adapter(context, R.layout.tango_item, dataArr);
                     listview.setAdapter(adapter);
                     listview.setVisibility(View.VISIBLE);
+                    wowsuch.setVisibility(View.INVISIBLE);
                 }
 
             }

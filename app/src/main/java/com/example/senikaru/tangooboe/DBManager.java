@@ -136,7 +136,7 @@ public class DBManager extends SQLiteOpenHelper {
 
         // sql select
         //String sql="select * from KanjiData where Chapter="+phrase+" or kanji="+phrase+" or korean="+phrase+" or hiragana="+phrase;
-        String sql="select * from KanjiData where Chapter LIKE '%"+phrase+"%' or kanji LIKE '%"+phrase+"%' or korean LIKE '%"+phrase+"%' or hiragana LIKE '%"+phrase+"%'" ;
+        String sql="select * from KanjiData where kanji LIKE '%"+phrase+"%' or korean LIKE '%"+phrase+"%' or hiragana LIKE '%"+phrase+"%'" ;
 
         try{
             SQLiteDatabase db=this.getReadableDatabase();
@@ -151,6 +151,46 @@ public class DBManager extends SQLiteOpenHelper {
                     data.put("Chapter", cursor.getString(cursor.getColumnIndex("Chapter")));
                     data.put("furigana", cursor.getString(cursor.getColumnIndex("furigana")));
                     data.put("kanji", cursor.getString(cursor.getColumnIndex("kanji")));
+                    data.put("korean", cursor.getString(cursor.getColumnIndex("korean")));
+                    data.put("stared", cursor.getString(cursor.getColumnIndex("stared")));
+
+                    arraylist.add(data);
+
+                }while(cursor.moveToNext());
+            }
+
+            db.close();
+            cursor.close();
+            return arraylist;
+
+        }
+        catch (SQLException e){
+            return null;
+        }
+    }
+
+    public ArrayList<HashMap<String,String>> getChap(String phrase)
+    {
+        ArrayList<HashMap<String,String>> arraylist=new ArrayList<HashMap<String,String>>();
+
+        // sql select
+        //String sql="select * from KanjiData where Chapter="+phrase+" or kanji="+phrase+" or korean="+phrase+" or hiragana="+phrase;
+        String sql="select * from KanjiData where Chapter = '"+phrase+"'" ;
+
+        try{
+            SQLiteDatabase db=this.getReadableDatabase();
+            Cursor cursor=db.rawQuery(sql, null);
+
+
+            if(cursor.moveToFirst())
+            {
+                do {
+
+                    HashMap<String,String> data=new HashMap<String, String>();
+                    data.put("Chapter", cursor.getString(cursor.getColumnIndex("Chapter")));
+                    data.put("furigana", cursor.getString(cursor.getColumnIndex("furigana")));
+                    data.put("kanji", cursor.getString(cursor.getColumnIndex("kanji")));
+                    data.put("hiragana", cursor.getString(cursor.getColumnIndex("hiragana")));
                     data.put("korean", cursor.getString(cursor.getColumnIndex("korean")));
                     data.put("stared", cursor.getString(cursor.getColumnIndex("stared")));
 
