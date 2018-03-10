@@ -39,7 +39,11 @@ public class BookSelectActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Intent it =new Intent(this, ItemListActivity.class);
+
         if (position == 0) {
+
+            it.putExtra("chap","b");
 
             CharSequence text = "0";
             int duration = Toast.LENGTH_SHORT;
@@ -54,6 +58,8 @@ public class BookSelectActivity extends AppCompatActivity implements AdapterView
         }
         else if (position == 1) {
 
+            it.putExtra("chap","m");
+
             CharSequence text = "1";
             int duration = Toast.LENGTH_SHORT;
 
@@ -62,6 +68,8 @@ public class BookSelectActivity extends AppCompatActivity implements AdapterView
 
         }
         else if (position == 2) {
+
+            it.putExtra("chap","h");
 
             CharSequence text = "2";
             int duration = Toast.LENGTH_SHORT;
@@ -72,6 +80,8 @@ public class BookSelectActivity extends AppCompatActivity implements AdapterView
         }
         else if (position == 3) {
 
+            it.putExtra("chap","f");
+
             CharSequence text = "3";
             int duration = Toast.LENGTH_SHORT;
 
@@ -79,5 +89,7 @@ public class BookSelectActivity extends AppCompatActivity implements AdapterView
             toast.show();
 
         }
+
+        startActivity(it);
     }
 }

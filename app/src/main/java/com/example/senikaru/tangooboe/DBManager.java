@@ -71,6 +71,32 @@ public class DBManager extends SQLiteOpenHelper {
         }
     }
 
+    public ArrayList<String> getChapName(String book){
+        ArrayList<String> arrayList=new ArrayList<String>();
+
+        String sql="select * from Chapters where chapter LIKE '"+book+"%'";
+
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(sql, null);
+
+
+            if (cursor.moveToFirst()) {
+                do {
+                    arrayList.add(cursor.getString(cursor.getColumnIndex("name")));
+
+                } while (cursor.moveToNext());
+            }
+
+            db.close();
+            cursor.close();
+            return arrayList;
+
+        }catch (SQLException e){
+            return null;
+        }
+    }
+
     public ArrayList<HashMap<String,String>> getAll()
     {
         ArrayList<HashMap<String,String>> arraylist=new ArrayList<HashMap<String,String>>();

@@ -9,7 +9,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="com.example.senikaru.masterdetailtest.ItemListActivity">
+    tools:context="com.example.senikaru.tangooboe.ItemDetailActivity">
 
     <!--
     This layout is a two-pane layout for the Items
@@ -17,7 +17,7 @@
     
     -->
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/item_list"
         android:name="com.example.senikaru.masterdetailtest.ItemListFragment"
@@ -25,7 +25,6 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
         tools:context="com.example.senikaru.masterdetailtest.ItemListActivity"
         tools:listitem="@layout/item_list_content" />
 
