@@ -89,6 +89,17 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(this);
 
+        setTitle("error");
+        if(chp_id.trim().equals("b".trim()))
+            setTitle("다락원 초중급");
+        else if(chp_id.trim().equals("m".trim()))
+            setTitle("디릭원 중급");
+        else if(chp_id.trim().equals("h".trim()))
+            setTitle("일본어 上級 점프");
+        else if(chp_id.trim().equals("f".trim()))
+            setTitle("일본어 파이널 점프");
+
+
     }
 
     @Override

@@ -97,6 +97,28 @@ public class DBManager extends SQLiteOpenHelper {
         }
     }
 
+    public String getChapTitle(String id){
+        String Chap_title="error";
+        String sql="select * from Chapters where chapter = '"+id+"'";
+
+        try{
+            SQLiteDatabase db=this.getReadableDatabase();
+            Cursor cursor=db.rawQuery(sql, null);
+
+
+            if(cursor.moveToFirst())
+                Chap_title=cursor.getString(cursor.getColumnIndex("name"));
+            db.close();
+            cursor.close();
+
+        }catch (SQLException e){
+
+        }
+        return Chap_title;
+
+    }
+
+
     public ArrayList<HashMap<String,String>> getAll()
     {
         ArrayList<HashMap<String,String>> arraylist=new ArrayList<HashMap<String,String>>();

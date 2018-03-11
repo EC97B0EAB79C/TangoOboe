@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mode"/>
+
+        <RadioGroup
+            android:paddingLeft="10dp"
+            android:id="@+id/test_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rad_koka"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="한국어->漢字/ひらがな" />
+            <RadioButton
+                android:id="@+id/rad_hika"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ひらがな->漢字"/>
+            <RadioButton
+                android:id="@+id/rad_kako"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="漢字->ひらがな"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Random"
+        android:id="@+id/test_rand"/>
+
+    <Button
+        android:id="@+id/test_btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:visibility="visible"/>
+
+
+
+
+</LinearLayout>

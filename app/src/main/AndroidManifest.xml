@@ -31,6 +31,7 @@
                 android:value="com.example.senikaru.tangooboe.ItemListActivity" />
         </activity>
         <activity android:name=".BookSelectActivity" />
+        <activity android:name=".TestSettingActivity" />
     </application>
 
 </manifest>

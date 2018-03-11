@@ -1,5 +1,6 @@
 package com.example.senikaru.tangooboe;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +27,9 @@ import java.util.HashMap;
  */
 public class ItemDetailActivity extends AppCompatActivity {
 
+    Context context;
+    String chp_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,23 +37,30 @@ public class ItemDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
+        context=this;
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Acbtn pressed", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                Intent it_test =new Intent(context, TestSettingActivity.class);
+                it_test.putExtra("chp_id", chp_id);
+                startActivity(it_test);
             }
         });
+
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(false);
         }
 
         Intent intent=getIntent();
-        String chp_id=intent.getStringExtra("chp_id");
+        chp_id=intent.getStringExtra("chp_id");
 
         ArrayList<HashMap<String, String>> dataArr;
         dataArr=new ArrayList<HashMap<String, String>>();
@@ -64,7 +75,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
+        setTitle(dbManager.getChapTitle(chp_id));
     }
 
 
