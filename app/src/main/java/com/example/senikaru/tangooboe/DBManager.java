@@ -231,4 +231,26 @@ public class DBManager extends SQLiteOpenHelper {
         }
     }
 
+    public void setStar(Boolean star, String chp_id, String furigana){
+        String sql="UPDATE KanjiData Set stared = ";
+
+        if(star)
+            sql=sql+"1";
+        else
+            sql=sql+"0";
+
+        sql+=" where Chapter = '"+chp_id+"' and furigana = '"+furigana+"'";
+
+        try{
+
+            SQLiteDatabase db=this.getWritableDatabase();
+            db.execSQL(sql);
+            db.close();
+
+        } catch (SQLException e){
+
+        }
+
+    }
+
 }

@@ -51,7 +51,9 @@ public class TestSettingActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         int select_id=radioGroup.getCheckedRadioButtonId();
 
-        Intent intent=new Intent(context, TangoActivity.class);
+        Intent intent=new Intent(context, TestActivity.class);
+
+        intent.putExtra("chp_id", chp_id);
 
         if(select_id==R.id.rad_hika)
             intent.putExtra("mode", "hika");
@@ -61,14 +63,14 @@ public class TestSettingActivity extends AppCompatActivity implements View.OnCli
             intent.putExtra("mode", "koka");
 
         if(checkBox.isChecked())
-            intent.putExtra("rnad", "true");
+            intent.putExtra("rand", "true");
         else
             intent.putExtra("rand", "false");
 
-        Snackbar.make(view, "hooo", Snackbar.LENGTH_LONG)
+        Snackbar.make(view, chp_id, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
 
-//        startActivity(intent);
-
+        startActivity(intent);
+        finish();
     }
 }

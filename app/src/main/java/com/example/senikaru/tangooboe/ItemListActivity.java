@@ -43,9 +43,10 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
     ArrayList<String> chp_name;
     ListView listview;
     String chp_id;
+    int chp_num;
     Context context;
     ChapterListAdapter adapter;
-
+    Boolean chp_selected=false;
 
 
     @Override
@@ -68,8 +69,20 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    if(chp_selected){
+                        Snackbar.make(view, "Acbtn pressed", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                        Intent it_test =new Intent(context, TestSettingActivity.class);
+                        it_test.putExtra("chp_id", chp_id+Integer.toString(chp_num+1));
+                        startActivity(it_test);
+                    }
+                    else{
+                        Snackbar.make(view, "Please select chapter first", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                    }
+
                 }
             });
         }
@@ -104,6 +117,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        chp_num=i;
         if(mTwoPane){
             ArrayList<HashMap<String, String>> dataArr;
             GridView listview;
@@ -117,6 +131,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
             adapter=new Tango_Adapter(this, R.layout.tango_item, dataArr);
             listview.setAdapter(adapter);
 
+            chp_selected=true;
         } else {
             Context context = view.getContext();
             Intent intent = new Intent(context, ItemDetailActivity.class);

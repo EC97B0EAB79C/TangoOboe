@@ -2,7 +2,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
@@ -13,16 +12,6 @@
     android:id="@+id/test_layout"
     >
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:text="70%"
-        android:textSize="30dp"
-        android:id="@+id/percent"
-        />
-
     <ImageButton
         android:id="@+id/star"
         android:layout_alignParentRight="true"
@@ -31,26 +20,28 @@
         android:background="@mipmap/star01"
         />
 
-    <TextView
-        android:layout_width="match_parent"
+    <com.example.senikaru.tangooboe.FuriganaView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text_test_small"
-        android:textSize="30dp"
-        android:layout_above="@+id/text_test_big"
+        android:id="@+id/test_furigana"
         android:gravity="center_horizontal"
-        android:textColor="#fff"
-        android:text="かんじ"
+        android:layout_centerInParent="true"
         />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:id="@+id/text_test_big"
-        android:textSize="50dp"
-        android:textColor="#ffffff"
-        android:text="漢字"/>
+        android:layout_below="@id/test_furigana"
+        android:gravity="center"
+        android:text="화면은 누르면 답이 나옵니다"
+        android:id="@+id/information"/>
 
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:numColumns="2"
+        android:id="@+id/test_menu"></GridView>
 
 
 

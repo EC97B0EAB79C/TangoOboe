@@ -3,12 +3,14 @@ package com.example.senikaru.tangooboe;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,7 +26,6 @@ public class Tango_Adapter extends BaseAdapter {
     ArrayList<HashMap<String, String>> Tangos;
     int mResource;
     LayoutInflater mInflater;
-
 
     public Tango_Adapter(@NonNull Context context, int layoutId, ArrayList<HashMap<String, String>>  object) {
 
@@ -55,6 +56,7 @@ public class Tango_Adapter extends BaseAdapter {
         View mView;
         TextView korean;
         FuriganaView kanji, hidden;
+        RelativeLayout relativeLayout;
 
         if(view==null) {
             mView = mInflater.inflate(mResource, viewGroup, false);
@@ -66,7 +68,12 @@ public class Tango_Adapter extends BaseAdapter {
         korean=(TextView)mView.findViewById(R.id.tango_korean);
         kanji=(FuriganaView)mView.findViewById(R.id.tango_kanji);
         hidden=(FuriganaView)mView.findViewById(R.id.tango_kanji_hidden);
+        relativeLayout=(RelativeLayout)mView.findViewById(R.id.tango_re);
 
+        if (getItem(i).get("stared").trim().equals("1".trim()))
+            relativeLayout.setBackgroundResource(R.drawable.box_border_yellow);
+        else
+            relativeLayout.setBackgroundResource(R.drawable.box_border);
         TextPaint textPaint = new TextPaint();
         textPaint.setColor(Color.parseColor("#00000000"));
         textPaint.setTextSize(130);

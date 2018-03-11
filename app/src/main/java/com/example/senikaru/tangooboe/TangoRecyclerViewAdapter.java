@@ -7,6 +7,7 @@ import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,12 +46,14 @@ public class TangoRecyclerViewAdapter extends RecyclerView.Adapter<TangoRecycler
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView korean;
         public FuriganaView kanji, hidden;
+        RelativeLayout relativeLayout;
 
         public ViewHolder(View mView) {
             super(mView);
             korean=(TextView)mView.findViewById(R.id.tango_korean);
             kanji=(FuriganaView)mView.findViewById(R.id.tango_kanji);
             hidden=(FuriganaView)mView.findViewById(R.id.tango_kanji_hidden);
+            relativeLayout=(RelativeLayout)mView.findViewById(R.id.tango_re);
         }
     }
 
@@ -68,6 +71,10 @@ public class TangoRecyclerViewAdapter extends RecyclerView.Adapter<TangoRecycler
             textPaint.setTextSize(130*6/((String)getItem(i).get("kanji")).length());
         textPaint.setColor(Color.parseColor("#ffffffff"));
 
+        if (getItem(i).get("stared").trim().equals("1".trim()))
+            holder.relativeLayout.setBackgroundResource(R.drawable.box_border_yellow);
+        else
+            holder.relativeLayout.setBackgroundResource(R.drawable.box_border);
         holder.korean.setText((String)getItem(i).get("korean"));
         holder.kanji.text_set(textPaint,(String)getItem(i).get("furigana"),12,13);
     }
