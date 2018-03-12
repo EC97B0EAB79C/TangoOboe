@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,30 +31,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         grid = (GridView) findViewById(R.id.main_menu_grid);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(this);
+        TextView mine_ind=(TextView)findViewById(R.id.sub_title);
+        mine_ind.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         if (position == 0) {
 
-            CharSequence text = "0";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-
             Intent it =new Intent(this, BookSelectActivity.class);
+            it.putExtra("Mine", false);
             startActivity(it);
-
 
         }
         else if (position == 1) {
 
-            CharSequence text = "1";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
+            Intent it =new Intent(this, BookSelectActivity.class);
+            it.putExtra("Mine", true);
+            startActivity(it);
 
         }
         else if (position == 2) {

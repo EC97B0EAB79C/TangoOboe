@@ -23,7 +23,6 @@
             android:id="@+id/tango_kanji"/>
 
         <com.example.senikaru.tangooboe.FuriganaView
-            android:paddingTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"

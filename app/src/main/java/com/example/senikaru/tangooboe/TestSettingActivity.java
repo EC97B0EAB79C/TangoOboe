@@ -27,6 +27,7 @@ public class TestSettingActivity extends AppCompatActivity implements View.OnCli
     RadioGroup radioGroup;
     Button start;
     CheckBox checkBox;
+    Boolean mine;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class TestSettingActivity extends AppCompatActivity implements View.OnCli
 
         Intent intent= getIntent();
         chp_id=intent.getStringExtra("chp_id");
+        mine=intent.getBooleanExtra("Mine", true);
+
         context=this;
 
         radioGroup=(RadioGroup)findViewById(R.id.test_radio);
@@ -54,6 +57,7 @@ public class TestSettingActivity extends AppCompatActivity implements View.OnCli
         Intent intent=new Intent(context, TestActivity.class);
 
         intent.putExtra("chp_id", chp_id);
+        intent.putExtra("Mine", mine);
 
         if(select_id==R.id.rad_hika)
             intent.putExtra("mode", "hika");
@@ -67,8 +71,6 @@ public class TestSettingActivity extends AppCompatActivity implements View.OnCli
         else
             intent.putExtra("rand", "false");
 
-        Snackbar.make(view, chp_id, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
 
         startActivity(intent);
         finish();

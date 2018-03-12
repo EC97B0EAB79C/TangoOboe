@@ -29,6 +29,9 @@ public class ItemDetailActivity extends AppCompatActivity {
 
     Context context;
     String chp_id;
+    Boolean mine;
+    ArrayList<HashMap<String, String>> dataArr;
+    DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +46,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Acbtn pressed", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                Intent it_test =new Intent(context, TestSettingActivity.class);
+               Intent it_test =new Intent(context, TestSettingActivity.class);
                 it_test.putExtra("chp_id", chp_id);
+                it_test.putExtra("Mine", mine);
                 startActivity(it_test);
             }
         });
@@ -61,11 +62,35 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         chp_id=intent.getStringExtra("chp_id");
+        mine=intent.getBooleanExtra("Mine", true);
 
-        ArrayList<HashMap<String, String>> dataArr;
         dataArr=new ArrayList<HashMap<String, String>>();
-        DBManager dbManager=new DBManager(this);
-        dataArr=dbManager.getChap(chp_id);
+        dbManager=new DBManager(this);
+        if(mine)
+            dataArr=dbManager.getMine(chp_id);
+        else
+            dataArr=dbManager.getChap(chp_id);
+
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.tango_list);
+        recyclerView.setHasFixedSize(true);
+        TangoRecyclerViewAdapter tangoRecyclerViewAdapter=new TangoRecyclerViewAdapter(dataArr, R.layout.tango_item);
+        tangoRecyclerViewAdapter.setContext(context);
+        recyclerView.setAdapter(tangoRecyclerViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        setTitle(dbManager.getChapTitle(chp_id));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mine)
+            dataArr=dbManager.getMine(chp_id);
+        else
+            dataArr=dbManager.getChap(chp_id);
 
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.tango_list);
@@ -77,6 +102,4 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         setTitle(dbManager.getChapTitle(chp_id));
     }
-
-
 }

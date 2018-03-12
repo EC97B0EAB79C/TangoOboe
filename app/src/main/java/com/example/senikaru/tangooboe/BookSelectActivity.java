@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class BookSelectActivity extends AppCompatActivity implements AdapterView
 
     ArrayList<String> arrayModel;
     GridView grid;
+    Boolean mine;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +37,14 @@ public class BookSelectActivity extends AppCompatActivity implements AdapterView
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(this);
 
+        Intent intent=getIntent();
+        mine=intent.getBooleanExtra("Mine", true);
+        if(!mine){
+            TextView mine_ind=(TextView)findViewById(R.id.sub_title);
+            mine_ind.setVisibility(View.INVISIBLE);
+        }
+
+
     }
 
     @Override
@@ -42,54 +52,19 @@ public class BookSelectActivity extends AppCompatActivity implements AdapterView
         Intent it =new Intent(this, ItemListActivity.class);
 
         if (position == 0) {
-
             it.putExtra("chap","b");
-
-            CharSequence text = "0";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-/*
-            Intent it =new Intent(this, ItemListActivity.class);
-            startActivity(it);
-*/
-
         }
         else if (position == 1) {
-
             it.putExtra("chap","m");
-
-            CharSequence text = "1";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-
         }
         else if (position == 2) {
-
             it.putExtra("chap","h");
-
-            CharSequence text = "2";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-
         }
         else if (position == 3) {
-
             it.putExtra("chap","f");
-
-            CharSequence text = "3";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-
         }
 
+        it.putExtra("Mine", mine);
         startActivity(it);
     }
 }

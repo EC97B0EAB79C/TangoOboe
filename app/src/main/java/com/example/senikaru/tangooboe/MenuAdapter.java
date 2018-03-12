@@ -1,7 +1,9 @@
 package com.example.senikaru.tangooboe;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +20,11 @@ public class MenuAdapter extends BaseAdapter {
     int mResource;
     ArrayList<String> mObjects;
     LayoutInflater minflater;
+    Context context;
 
     public MenuAdapter(Context context, int layoutId, ArrayList<String> object){
+
+        this.context=context;
         mResource=layoutId;
         mObjects=object;
         minflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -54,6 +59,8 @@ public class MenuAdapter extends BaseAdapter {
         TextPaint textPaint = new TextPaint();
         textPaint.setTextSize(80);
         textPaint.setColor(Color.parseColor("#ffffffff"));
+        AssetManager mngr = context.getAssets();
+        textPaint.setTypeface(Typeface.createFromAsset(mngr, "fonts/KozMinPro-Regular.otf"));
 
 
         text1.text_set(textPaint, mObjects.get(position), 11,13);

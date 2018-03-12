@@ -50,7 +50,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-
+            android:paddingBottom="30dp"
             android:visibility="visible"
             android:numColumns="1"></GridView>
 

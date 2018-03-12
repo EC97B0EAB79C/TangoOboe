@@ -1,7 +1,10 @@
 package com.example.senikaru.tangooboe;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -39,14 +42,16 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     String chp_id;
     RelativeLayout layout;
     TextView info;
-    Boolean starred;
+    Boolean starred, mine;
     DBManager dbManager;
+    Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        context=this;
 
         layout=(RelativeLayout)findViewById(R.id.test_layout);
         layout.setOnTouchListener(this);
@@ -67,11 +72,15 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent=getIntent();
         chp_id=intent.getStringExtra("chp_id");
         mode_id=intent.getStringExtra("mode");
+        mine=intent.getBooleanExtra("Mine", true);
         String rand_id=intent.getStringExtra("rand");
 
         //Database
         dbManager=new DBManager(this);
-        Tangoes= dbManager.getChap(chp_id);
+        if(mine)
+            Tangoes=dbManager.getMine(chp_id);
+        else
+            Tangoes=dbManager.getChap(chp_id);
         if(rand_id.trim().equals("true".trim())){
             Collections.shuffle(Tangoes);
         }
@@ -81,6 +90,8 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         textPaint = new TextPaint();
         textPaint.setColor(Color.parseColor("#FFFFFFFF"));
         textPaint.setTextSize(130);
+        AssetManager mngr = context.getAssets();
+        textPaint.setTypeface(Typeface.createFromAsset(mngr, "fonts/KozMinPro-Regular.otf"));
 
         question();
 
@@ -129,17 +140,25 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
 
         }
 
-        if(curr_pos==Tangoes.size()){
-            finish();
-        }
         if(i==0){
+            dbManager.setScore(true, chp_id,HashArr[curr_pos].get("furigana"));
             correct++;
             curr_pos++;
-            question();
+
+            if(curr_pos==Tangoes.size()){
+                finish();
+            }
+            else
+                question();
         }
         else if(i==1){
+            dbManager.setScore(false, chp_id, HashArr[curr_pos].get("furigana"));
             curr_pos++;
-            question();
+            if(curr_pos==Tangoes.size()){
+                finish();
+            }
+            else
+                question();
         }
 
 
@@ -160,6 +179,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
             starred=true;
             star.setBackgroundResource(R.mipmap.star02);
         }
+        dbManager.setStar(starred,chp_id, HashArr[curr_pos].get("furigana"));
     }
 
     @Override

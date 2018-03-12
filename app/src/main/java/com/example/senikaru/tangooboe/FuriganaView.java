@@ -19,6 +19,7 @@ import android.view.View;
 // Text view with furigana display
 public class FuriganaView extends View
 {
+    int height;
     private class TextFurigana
     {
         // Info
@@ -443,7 +444,8 @@ public class FuriganaView extends View
             hnew |= MEASURED_STATE_TOO_SMALL;
         
         // Set result
-        setMeasuredDimension(wnew, hnew);
+        this.height=hnew;
+        setMeasuredDimension(wnew, (int)(hnew*0.75));
     }
     
     private void text_calculate(float line_max)
@@ -581,7 +583,7 @@ public class FuriganaView extends View
         assert(m_line_n.size() == m_line_f.size());
         
         // Coordinates
-        float y = m_linesize;
+        float y = m_linesize-(int)(this.height*0.4);
         
         // Loop lines
         for (int i = 0; i < m_line_n.size(); i++) {

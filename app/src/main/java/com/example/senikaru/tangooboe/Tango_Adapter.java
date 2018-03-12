@@ -1,7 +1,9 @@
 package com.example.senikaru.tangooboe;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
@@ -26,9 +28,10 @@ public class Tango_Adapter extends BaseAdapter {
     ArrayList<HashMap<String, String>> Tangos;
     int mResource;
     LayoutInflater mInflater;
+    Context context;
 
     public Tango_Adapter(@NonNull Context context, int layoutId, ArrayList<HashMap<String, String>>  object) {
-
+        this.context=context;
         mResource=layoutId;
         Tangos=object;
         mInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -70,13 +73,18 @@ public class Tango_Adapter extends BaseAdapter {
         hidden=(FuriganaView)mView.findViewById(R.id.tango_kanji_hidden);
         relativeLayout=(RelativeLayout)mView.findViewById(R.id.tango_re);
 
-        if (getItem(i).get("stared").trim().equals("1".trim()))
+        //box border color
+        if (getItem(i).get("inocori").trim().equals("true".trim()))
+            relativeLayout.setBackgroundResource(R.drawable.box_border_red);
+        else if (getItem(i).get("stared").trim().equals("1".trim()))
             relativeLayout.setBackgroundResource(R.drawable.box_border_yellow);
-        else
-            relativeLayout.setBackgroundResource(R.drawable.box_border);
+        else relativeLayout.setBackgroundResource(R.drawable.box_border);
+
         TextPaint textPaint = new TextPaint();
         textPaint.setColor(Color.parseColor("#00000000"));
         textPaint.setTextSize(130);
+        AssetManager mngr = context.getAssets();
+        textPaint.setTypeface(Typeface.createFromAsset(mngr, "fonts/KozMinPro-Regular.otf"));
 
         hidden.text_set(textPaint, "{猫;ねこ}",12,13);
 
@@ -87,7 +95,7 @@ public class Tango_Adapter extends BaseAdapter {
         textPaint.setColor(Color.parseColor("#ffffffff"));
 
         korean.setText((String)getItem(i).get("korean"));
-        kanji.text_set(textPaint,(String)getItem(i).get("furigana"),12,13);
+        kanji.text_set(textPaint,(String)getItem(i).get("furigana"),10,13);
 
         return mView;
     }

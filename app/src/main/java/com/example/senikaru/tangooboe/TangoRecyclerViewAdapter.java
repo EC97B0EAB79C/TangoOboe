@@ -1,7 +1,9 @@
 package com.example.senikaru.tangooboe;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
@@ -23,12 +25,16 @@ public class TangoRecyclerViewAdapter extends RecyclerView.Adapter<TangoRecycler
     ArrayList<HashMap<String, String>> Tangos;
     int mResource;
     LayoutInflater mInflater;
-
+    Context context;
 
 
     public TangoRecyclerViewAdapter(ArrayList<HashMap<String, String>> items, int itemLayout) {
         this.Tangos = items;
         this.mResource = itemLayout;
+    }
+
+    public void setContext(Context context){
+        this.context=context;
     }
 
     public HashMap<String, String> getItem(int i) {
@@ -39,7 +45,7 @@ public class TangoRecyclerViewAdapter extends RecyclerView.Adapter<TangoRecycler
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View mView = LayoutInflater.from(parent.getContext()).inflate(mResource, parent, false);
-
+        context = parent.getContext();
         return new ViewHolder(mView);
     }
 
@@ -62,6 +68,8 @@ public class TangoRecyclerViewAdapter extends RecyclerView.Adapter<TangoRecycler
         TextPaint textPaint = new TextPaint();
         textPaint.setColor(Color.parseColor("#00000000"));
         textPaint.setTextSize(130);
+        AssetManager mngr = context.getAssets();
+        textPaint.setTypeface(Typeface.createFromAsset(mngr, "fonts/KozMinPro-Regular.otf"));
 
         holder.hidden.text_set(textPaint, "{猫;ねこ}",12,13);
 
@@ -71,12 +79,16 @@ public class TangoRecyclerViewAdapter extends RecyclerView.Adapter<TangoRecycler
             textPaint.setTextSize(130*6/((String)getItem(i).get("kanji")).length());
         textPaint.setColor(Color.parseColor("#ffffffff"));
 
-        if (getItem(i).get("stared").trim().equals("1".trim()))
+
+        //box border color
+        if (getItem(i).get("inocori").trim().equals("true".trim()))
+            holder.relativeLayout.setBackgroundResource(R.drawable.box_border_red);
+        else if (getItem(i).get("stared").trim().equals("1".trim()))
             holder.relativeLayout.setBackgroundResource(R.drawable.box_border_yellow);
-        else
-            holder.relativeLayout.setBackgroundResource(R.drawable.box_border);
+        else holder.relativeLayout.setBackgroundResource(R.drawable.box_border);
+
         holder.korean.setText((String)getItem(i).get("korean"));
-        holder.kanji.text_set(textPaint,(String)getItem(i).get("furigana"),12,13);
+        holder.kanji.text_set(textPaint,(String)getItem(i).get("furigana"),10,13);
     }
 
     @Override

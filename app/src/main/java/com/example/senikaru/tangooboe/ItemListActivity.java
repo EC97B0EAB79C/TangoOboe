@@ -46,8 +46,8 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
     int chp_num;
     Context context;
     ChapterListAdapter adapter;
-    Boolean chp_selected=false;
-
+    Boolean chp_selected=false, mine;
+    ArrayList<HashMap<String, String>> dataArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,18 +69,20 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(chp_selected){
-                        Snackbar.make(view, "Acbtn pressed", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-
+                    if(chp_selected&&!dataArr.isEmpty()){
                         Intent it_test =new Intent(context, TestSettingActivity.class);
                         it_test.putExtra("chp_id", chp_id+Integer.toString(chp_num+1));
+                        it_test.putExtra("Mine", mine);
                         startActivity(it_test);
+
                     }
-                    else{
+                    else if(!chp_selected){
                         Snackbar.make(view, "Please select chapter first", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-
+                    }
+                    else{
+                        Snackbar.make(view, "You don't have to worry about this chapter", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                     }
 
                 }
@@ -89,6 +91,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
 
         Intent intent= getIntent();
         chp_id=intent.getStringExtra("chap");
+        mine=intent.getBooleanExtra("Mine", true);
         context=this;
 
         listview=(ListView) findViewById(R.id.item_list);
@@ -119,27 +122,67 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         chp_num=i;
         if(mTwoPane){
-            ArrayList<HashMap<String, String>> dataArr;
             GridView listview;
             Tango_Adapter adapter;
             listview=(GridView) findViewById(R.id.tango_list);
 
             dataArr=new ArrayList<HashMap<String, String>>();
             DBManager dbManager=new DBManager(this);
-            dataArr=dbManager.getChap(chp_id+Integer.toString(i+1));
+            if(mine)
+                dataArr=dbManager.getMine(chp_id+Integer.toString(i+1));
+            else
+                dataArr=dbManager.getChap(chp_id+Integer.toString(i+1));
 
             adapter=new Tango_Adapter(this, R.layout.tango_item, dataArr);
             listview.setAdapter(adapter);
 
             chp_selected=true;
         } else {
-            Context context = view.getContext();
-            Intent intent = new Intent(context, ItemDetailActivity.class);
+            DBManager dbManager = new DBManager(this);
+            if (mine) {
+                dataArr = dbManager.getMine(chp_id + Integer.toString(chp_num + 1));
+                if (dataArr.isEmpty()) {
+                    Snackbar.make(view, "You don't have to worry about this chapter", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, ItemDetailActivity.class);
 
-            intent.putExtra("chp_id", chp_id+Integer.toString(i+1));
+                    intent.putExtra("chp_id", chp_id + Integer.toString(i + 1));
+                    intent.putExtra("Mine", mine);
+                    context.startActivity(intent);
+                }
+            }
+            else {
+                Context context = view.getContext();
+                Intent intent = new Intent(context, ItemDetailActivity.class);
 
-            context.startActivity(intent);
+                intent.putExtra("chp_id", chp_id + Integer.toString(i + 1));
+                intent.putExtra("Mine", mine);
+                context.startActivity(intent);
+            }
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mTwoPane) {
+            GridView listview;
+            Tango_Adapter adapter;
+            listview = (GridView) findViewById(R.id.tango_list);
+
+            dataArr = new ArrayList<HashMap<String, String>>();
+            DBManager dbManager = new DBManager(this);
+            if (mine)
+                dataArr = dbManager.getMine(chp_id + Integer.toString(chp_num + 1));
+            else
+                dataArr = dbManager.getChap(chp_id + Integer.toString(chp_num + 1));
+
+            adapter = new Tango_Adapter(this, R.layout.tango_item, dataArr);
+            listview.setAdapter(adapter);
+
+            chp_selected = true;
+        }
+    }
 }
