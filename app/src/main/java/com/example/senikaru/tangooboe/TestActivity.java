@@ -89,7 +89,6 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         //Set question
         textPaint = new TextPaint();
         textPaint.setColor(Color.parseColor("#FFFFFFFF"));
-        textPaint.setTextSize(130);
         AssetManager mngr = context.getAssets();
         textPaint.setTypeface(Typeface.createFromAsset(mngr, "fonts/KozMinPro-Regular.otf"));
 
@@ -108,26 +107,50 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         if(mode_id.trim().equals("koka".trim())) {
             while (HashArr[curr_pos].get("korean").length() == 0) curr_pos++;
+            if(((String)HashArr[curr_pos].get("korean")).length()<=6)
+                textPaint.setTextSize(130);
+            else
+                textPaint.setTextSize(130*6/((String)HashArr[curr_pos].get("korean")).length());
             furiganaView.text_set(textPaint, HashArr[curr_pos].get("korean"), 12, 13);
         }
         else if(mode_id.trim().equals("hika".trim())) {
             while (HashArr[curr_pos].get("hiragana").length() == 0) curr_pos++;
+            if(((String)HashArr[curr_pos].get("hiragana")).length()<=6)
+                textPaint.setTextSize(130);
+            else
+                textPaint.setTextSize(130*6/((String)HashArr[curr_pos].get("hiragana")).length());
             furiganaView.text_set(textPaint, HashArr[curr_pos].get("hiragana"), 12, 13);
         }
         else if (mode_id.trim().equals("kako".trim())) {
             while (HashArr[curr_pos].get("hiragana").length() == 0) curr_pos++;
+            if(((String)HashArr[curr_pos].get("kanji")).length()<=6)
+                textPaint.setTextSize(130);
+            else
+                textPaint.setTextSize(130*6/((String)HashArr[curr_pos].get("kanji")).length());
             furiganaView.text_set(textPaint, HashArr[curr_pos].get("kanji"), 12, 13);
         }
     }
 
     public void answer(){
         if(mode_id.trim().equals("koka".trim())) {
+            if(((String)HashArr[curr_pos].get("kanji")).length()<=6)
+                textPaint.setTextSize(130);
+            else
+                textPaint.setTextSize(130*6/((String)HashArr[curr_pos].get("kanji")).length());
             furiganaView.text_set(textPaint, HashArr[curr_pos].get("furigana"), 12, 13);
         }
         else if(mode_id.trim().equals("hika".trim())) {
+            if(((String)HashArr[curr_pos].get("kanji")).length()<=6)
+                textPaint.setTextSize(130);
+            else
+                textPaint.setTextSize(130*6/((String)HashArr[curr_pos].get("kanji")).length());
             furiganaView.text_set(textPaint, HashArr[curr_pos].get("kanji"), 12, 13);
         }
         else if (mode_id.trim().equals("kako".trim())) {
+            if(((String)HashArr[curr_pos].get("hiragana")).length()<=6)
+                textPaint.setTextSize(130);
+            else
+                textPaint.setTextSize(130*6/((String)HashArr[curr_pos].get("hiragana")).length());
             furiganaView.text_set(textPaint, HashArr[curr_pos].get("hiragana"), 12, 13);
         }
     }

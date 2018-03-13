@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        String[] menu={"{文法;ぶんぽ}の{単語;たんご}","{自分;じぶん}の{単語;たんご}","{検索;けんさく}"};
+        String[] menu={"{文法;ぶんぽ}の{単語;たんご}","{誤答;ごとう}ノート","{検索;けんさく}"};
 
         arrayModel=new ArrayList<String>(Arrays.asList(menu));
         MenuAdapter adapter = new MenuAdapter(this, R.layout.grid_array, arrayModel);
