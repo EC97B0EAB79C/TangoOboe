@@ -2,6 +2,10 @@
 *.apk
 *.ap_
 
+*.pptx
+*.ai
+
+Untitled-1.png
 # Files for the ART/Dalvik VM
 *.dex
 
